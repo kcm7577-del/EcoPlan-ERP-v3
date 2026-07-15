@@ -25,9 +25,7 @@ public class VehicleController {
             @Valid @RequestBody VehicleCreateRequest request
     ) {
 
-        Long id = vehicleService.create(request);
-
-        return ApiResponse.success(id);
+        return ApiResponse.success(vehicleService.create(request));
     }
 
     @GetMapping
@@ -45,6 +43,7 @@ public class VehicleController {
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ApiResponse<Void> update(
             @PathVariable Long id,
             @Valid @RequestBody VehicleUpdateRequest request
@@ -56,6 +55,7 @@ public class VehicleController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ApiResponse<Void> delete(
             @PathVariable Long id
     ) {

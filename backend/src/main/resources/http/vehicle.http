@@ -1,0 +1,42 @@
+### 차량 등록
+POST http://localhost:8080/api/vehicles
+Content-Type: application/json
+
+{
+  "vehicleNumber": "12가3456",
+  "vehicleModel": "Hyundai Staria",
+  "fuelType": "DIESEL",
+  "averageFuelEfficiency": 11.8,
+  "vehicleStatus": "AVAILABLE",
+  "remark": "본사 차량"
+}
+
+###
+
+### 전체 조회
+GET http://localhost:8080/api/vehicles
+
+###
+
+### 단건 조회
+GET http://localhost:8080/api/vehicles/1
+
+###
+
+### 수정
+PUT http://localhost:8080/api/vehicles/1
+Content-Type: application/json
+
+{
+  "vehicleNumber": "12가3456",
+  "vehicleModel": "Hyundai Staria Lounge",
+  "fuelType": "DIESEL",
+  "averageFuelEfficiency": 12.4,
+  "vehicleStatus": "AVAILABLE",
+  "remark": "정상 운행"
+}
+
+###
+
+### 삭제
+DELETE http://localhost:8080/api/vehicles/1
