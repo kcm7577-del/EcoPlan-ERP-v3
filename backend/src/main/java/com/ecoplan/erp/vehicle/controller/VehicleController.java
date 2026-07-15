@@ -1,5 +1,6 @@
 package com.ecoplan.erp.vehicle.controller;
 
+import com.ecoplan.erp.common.response.ApiResponse;
 import com.ecoplan.erp.vehicle.dto.VehicleCreateRequest;
 import com.ecoplan.erp.vehicle.dto.VehicleResponse;
 import com.ecoplan.erp.vehicle.dto.VehicleUpdateRequest;
@@ -20,38 +21,48 @@ public class VehicleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@Valid @RequestBody VehicleCreateRequest request) {
+    public ApiResponse<Long> create(
+            @Valid @RequestBody VehicleCreateRequest request
+    ) {
 
-        return vehicleService.create(request);
+        Long id = vehicleService.create(request);
+
+        return ApiResponse.success(id);
     }
 
     @GetMapping
-    public List<VehicleResponse> findAll() {
+    public ApiResponse<List<VehicleResponse>> findAll() {
 
-        return vehicleService.findAll();
+        return ApiResponse.success(vehicleService.findAll());
     }
 
     @GetMapping("/{id}")
-    public VehicleResponse findById(@PathVariable Long id) {
+    public ApiResponse<VehicleResponse> findById(
+            @PathVariable Long id
+    ) {
 
-        return vehicleService.findById(id);
+        return ApiResponse.success(vehicleService.findById(id));
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(
+    public ApiResponse<Void> update(
             @PathVariable Long id,
             @Valid @RequestBody VehicleUpdateRequest request
     ) {
 
         vehicleService.update(id, request);
+
+        return ApiResponse.success();
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
+    public ApiResponse<Void> delete(
+            @PathVariable Long id
+    ) {
 
         vehicleService.delete(id);
+
+        return ApiResponse.success();
     }
 
 }

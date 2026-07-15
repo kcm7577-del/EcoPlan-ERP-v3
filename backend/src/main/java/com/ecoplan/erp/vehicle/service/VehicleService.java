@@ -1,5 +1,7 @@
 package com.ecoplan.erp.vehicle.service;
 
+import com.ecoplan.erp.common.exception.BusinessException;
+import com.ecoplan.erp.common.exception.ErrorCode;
 import com.ecoplan.erp.vehicle.domain.Vehicle;
 import com.ecoplan.erp.vehicle.dto.VehicleCreateRequest;
 import com.ecoplan.erp.vehicle.dto.VehicleResponse;
@@ -21,7 +23,7 @@ public class VehicleService {
     public Long create(VehicleCreateRequest request) {
 
         if (vehicleRepository.existsByVehicleNumber(request.getVehicleNumber())) {
-            throw new IllegalArgumentException("Vehicle number already exists.");
+            throw new BusinessException(ErrorCode.DUPLICATE_VEHICLE_NUMBER);
         }
 
         Vehicle vehicle = new Vehicle(
@@ -49,7 +51,7 @@ public class VehicleService {
     public VehicleResponse findById(Long id) {
 
         Vehicle vehicle = vehicleRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Vehicle not found."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.VEHICLE_NOT_FOUND));
 
         return VehicleResponse.from(vehicle);
     }
@@ -57,7 +59,7 @@ public class VehicleService {
     public void update(Long id, VehicleUpdateRequest request) {
 
         Vehicle vehicle = vehicleRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Vehicle not found."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.VEHICLE_NOT_FOUND));
 
         vehicle.update(
                 request.getVehicleNumber(),
@@ -72,9 +74,8 @@ public class VehicleService {
     public void delete(Long id) {
 
         Vehicle vehicle = vehicleRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Vehicle not found."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.VEHICLE_NOT_FOUND));
 
         vehicleRepository.delete(vehicle);
     }
-
 }
